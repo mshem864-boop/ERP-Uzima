@@ -1,0 +1,25 @@
+
+[
+  {
+    "doctype": "Workflow",
+    "workflow_name": "Purchase Order Approval",
+    "document_type": "Purchase Order",
+    "is_active": 1,
+    "send_email_alert": 1,
+    "workflow_state": [
+      {"state": "Draft", "doc_status": "0", "allow_edit": "Purchase Manager"},
+      {"state": "Pending Finance", "doc_status": "0", "allow_edit": "Purchase Manager"},
+      {"state": "Pending Admin", "doc_status": "0", "allow_edit": "Purchase Manager"},
+      {"state": "Pending CEO", "doc_status": "0", "allow_edit": "Purchase Manager"},
+      {"state": "Approved", "doc_status": "1", "allow_edit": "Purchase Manager"}
+    ],
+    "transitions": [
+      {"state": "Draft", "action": "Submit for Approval", "next_state": "Pending Finance", "allowed": "Procurement User"},
+      {"state": "Pending Finance", "action": "Approve", "next_state": "Pending Admin", "allowed": "Finance Manager"},
+      {"state": "Pending Finance", "action": "Reject", "next_state": "Draft", "allowed": "Finance Manager"},
+      {"state": "Pending Admin", "action": "Approve", "next_state": "Pending CEO", "allowed": "Administrator"},
+      {"state": "Pending CEO", "action": "Approve", "next_state": "Approved", "allowed": "CEO"},
+      {"state": "Pending CEO", "action": "Reject", "next_state": "Draft", "allowed": "CEO"}
+    ]
+  }
+]
